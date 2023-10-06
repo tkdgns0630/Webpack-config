@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const { InjectManifest } = require("workbox-webpack-plugin");
 // Service worker Plugin
@@ -8,9 +9,9 @@ const { GenerateSW } = require("workbox-webpack-plugin");
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
 // TODO: Add CSS loaders and babel to webpack.
 
-module.exports = () => {
+module.exports = (env, argv) => {
   return {
-    mode: "development",
+    mode: "production",
     entry: {
       main: "./src/js/index.js",
       install: "./src/js/install.js",
@@ -24,6 +25,7 @@ module.exports = () => {
         template: "./index.html",
         title: "Text Editor",
       }),
+      new MiniCssExtractPlugin(),
 
       new InjectManifest({
         swSrc: "./src-sw.js",
@@ -36,11 +38,13 @@ module.exports = () => {
         short_name: "TE",
         description: "My awesome Progressive Web Text editor!",
         background_color: "#ffffff",
-        crossorigin: "use-credentials", //can be null, use-credentials or anonymous
+        start_url: "./",
+        publicPath: "./",
         icons: [
           {
             src: path.resolve("src/images/logo.png"),
             sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+            destination: path.join("assets", "icons"),
           },
         ],
       }),
@@ -51,7 +55,7 @@ module.exports = () => {
         {
           // css loader
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
         },
         {
           // barbell loader
