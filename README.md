@@ -12,7 +12,7 @@ Instructions are as follows.
 
 ## Table of Contents 
 - [Installation](#installation)
-- [Acceptance Crite1ria](#Acceptance Crite1ria)
+- [Acceptance-Crite1ria](#Acceptance-Crite1ria)
 - [Technologies](#technologies)
 - [Credits](#credits)
 
